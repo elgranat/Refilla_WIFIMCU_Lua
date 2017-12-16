@@ -1,0 +1,6 @@
+gpio.mode(16, gpio.INPUT)
+gpio.mode(15, gpio.INPUT)
+gpio.mode(17,gpio.OUTPUT)
+tmr.start(0, 500, function()
+    gpio.toggle(17)
+end)

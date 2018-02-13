@@ -1,15 +1,19 @@
 
+waterPump = {
+    on = false;
+    pin = 0;
+}
 
-waterPin = 15
+function waterPump:turnOn()
+    gpio.write(self.pin, gpio.HIGH)
+    self.on = true
+end;
+function waterPump:turnOff()
+    gpio.write(self.pin, gpio.LOW)
+    self.on = false
+end;
 
+function waterPump:init(pin)
+    self.pin = pin;
 
-gpio.mode(waterPin, gpio.OUTPUT)
-
-gpio.write(waterPin, gpio.LOW)
-
-
-tmr.start(1, 1000, function()
-    gpio.write(waterPin, gpio.HIGH)
-    tmr.delayms(300)
-    gpio.write(waterPin, gpio.LOW)
-end)
+end;

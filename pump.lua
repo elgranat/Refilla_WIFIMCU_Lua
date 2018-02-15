@@ -2,9 +2,9 @@ Pump = {}
 
 function Pump:new(pin)
 
-    local obj= {}
+    local obj = {}
 
-    local private  = {}
+    local private = {}
 
     private.on = false
     private.pin = pin
@@ -12,17 +12,17 @@ function Pump:new(pin)
     gpio.mode(pin, gpio.OUTPUT)
     gpio.write(pin, gpio.LOW)
 
-    function obj:turnOn()
-        print("turnOn pump " .. private.pin)
+    function obj:turnOn(reason)
+        print("turnOn pump " .. private.pin .. reason)
         gpio.write(private.pin, gpio.HIGH)
         private.on = true
-    end;
+    end
 
-    function obj:turnOff()
-        print("turnOff pump " .. private.pin)
+    function obj:turnOff(reason)
+        print("turnOff pump " .. private.pin .. reason)
         gpio.write(private.pin, gpio.LOW)
         private.on = false
-    end;
+    end
 
     function obj:isPumping()
         return private.on;

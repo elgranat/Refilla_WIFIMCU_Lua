@@ -1,9 +1,7 @@
-
 stbPin = 6
 dataPin = 5
 clockPin = 4
 regCell = 0
-mode = gpio.HIGH;
 
 red = 2
 green = 4
@@ -38,25 +36,25 @@ function setColors(first, second, third)
 
     local val = old.first + (old.third * 8) + old.second * 32;
 
-    local b = bit.isset(val,5)
+    local b = bit.isset(val, 5)
     local a;
 
     if b then
-        a = bit.isset(val,4)
-        val = bit.set(val,4)
-        else
-        a = bit.isset(val,4)
-        val = bit.clear(val,4)
+        a = bit.isset(val, 4)
+        val = bit.set(val, 4)
+    else
+        a = bit.isset(val, 4)
+        val = bit.clear(val, 4)
     end
 
     if a then
-       val = bit.set(val,5)
+        val = bit.set(val, 5)
     else
-       val = bit.clear(val,5)
+        val = bit.clear(val, 5)
     end
 
     for i = 0, 7 do
-       local b = bit.isset(val,i)
+        local b = bit.isset(val, i)
 
         if b then
             gpio.write(dataPin, gpio.HIGH)

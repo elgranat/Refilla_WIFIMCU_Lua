@@ -1,4 +1,4 @@
-speakerPin = 16
+speakerPin = 15
 
 gpio.mode(speakerPin, gpio.OUTPUT)
 
@@ -24,16 +24,16 @@ t["gSH"] = 830
 t["aH"] = 880
 
 function beep(pin, tone, duration)
-    local freq = t[tone .. ''];
-    print('Frequency:' .. freq)
-    pwm.start(pin,freq*5, 50)
+    local freq = t[tone .. ""];
+    print("Frequency:" .. freq)
+    pwm.start(pin, freq * 5, 50)
     tmr.delayms(duration)
 
     pwm.stop(pin)
 
     tmr.wdclr()
 
-    tmr.delayms(20)
+    tmr.delayms(1)
 end
 
 beep(speakerPin, "a", 500)
@@ -93,7 +93,7 @@ beep(speakerPin, "fH", 125)
 
 beep(speakerPin, "fSH", 250)
 
-tmr.delayus(250000)
+tmr.delayms(250)
 
 beep(speakerPin, "aS", 250)
 
@@ -111,7 +111,7 @@ beep(speakerPin, "b", 125)
 
 beep(speakerPin, "cH", 250)
 
-tmr.delayus(250000)
+tmr.delayms(250)
 
 beep(speakerPin, "f", 125)
 
@@ -149,7 +149,7 @@ beep(speakerPin, "fH", 125)
 
 beep(speakerPin, "fSH", 250)
 
-tmr.delayus(250000)
+tmr.delayms(250)
 
 beep(speakerPin, "aS", 250)
 
@@ -167,7 +167,7 @@ beep(speakerPin, "b", 125)
 
 beep(speakerPin, "cH", 250)
 
-tmr.delayus(250000)
+tmr.delayms(250)
 
 beep(speakerPin, "f", 250)
 

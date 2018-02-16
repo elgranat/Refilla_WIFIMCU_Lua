@@ -1,8 +1,8 @@
 dofile("pump.lua")
 airPump = Pump:new(16);
 
-speakerPin = 15
-dofile("playpump.lua")
+--speakerPin = 15
+--dofile("playpump.lua")
 
 waterPump = Pump:new(15);
 dofile("led.lua")
@@ -77,20 +77,22 @@ function startRefilla(arg)
             if flowData == 0 then
                 print("flowData is 0")
                 -- possibly bottle is empty let"s check
-                setColors(nil, nil, blue);
+                setColors(nil, nil, blue)
 
+                waterPump:turnOff("wating for pressure")
                 Pressure:measureLevel(function(level)
                     print("startRefilla bottle level is " .. level)
                     setColors(nil, nil, 0);
                     if level < minWaterLevel then
                         emergencyStop(STOPED_BY_BOTTLE_LEVEL)
+                    else
+                        waterPump:turnOn("pressure is good");
                     end
                 end);
             end
         else
             low = gpio.read(DISTANCE_PIN_LOW);
             if low == 1 then
-                --                print("startRefilla last dist is " .. low .. " turnOn")
                 waterPump:turnOn("water is low");
             end
         end

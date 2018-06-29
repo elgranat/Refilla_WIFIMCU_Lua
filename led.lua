@@ -13,6 +13,12 @@ old = {
     third = 0
 }
 
+new = {
+    first = 0,
+    second = 0,
+    third = 0
+}
+
 gpio.mode(dataPin, gpio.OUTPUT)
 gpio.mode(clockPin, gpio.OUTPUT)
 gpio.mode(stbPin, gpio.OUTPUT)
@@ -22,17 +28,29 @@ gpio.write(clockPin, gpio.LOW)
 gpio.write(stbPin, gpio.LOW)
 
 function clock()
-    tmr.delayms(1)
+    tmr.delayms(2)
     gpio.write(clockPin, gpio.HIGH)
-    tmr.delayms(1)
+    tmr.delayms(2)
     gpio.write(clockPin, gpio.LOW)
 end
 
-function setColors(first, second, third)
+function setColors (first, second, third)
+    if first ~= -1 then
+        new.first = first;
+    end
+    if second ~= -1 then
+        new.second = second
+    end
+    if third ~= -1 then
+        new.third = third
+    end
 
-    old.first = first or old.first or 0;
-    old.second = second or old.second or 0;
-    old.third = third or old.third or 0;
+end
+
+function applyColors()
+    old.first = new.first or old.first or 0;
+    old.second = new.second or old.second or 0;
+    old.third = new.third or old.third or 0;
 
     local val = old.first + (old.third * 8) + old.second * 32;
 
@@ -65,7 +83,7 @@ function setColors(first, second, third)
     end
 
     gpio.write(stbPin, gpio.HIGH)
-    tmr.delayms(1)
+    tmr.delayms(2)
     gpio.write(stbPin, gpio.LOW)
 end
 

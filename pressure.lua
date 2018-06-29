@@ -1,4 +1,4 @@
-Pressure = { running = false }
+Pressure = { running = false, lastRun = -30000 }
 
 function Pressure:init(config)
     self.pressPin = config.pin
@@ -18,13 +18,18 @@ function Pressure:levelNow()
     return press;
 end
 
-function Pressure:measureLevel(callback)
+function Pressure:measureLevel()
     local last = 10000;
     local diff;
-    local cb = callback;
     local timerID = self.tmrId;
     local motor = self.pump;
     local pumpStageFinished = false;
+
+    if ((tmr.tick() - Pressure.lastRun) < 30000) then
+        return;
+    end
+
+    Pressure.lastRun = tmr.tick();
     motor:turnOn("measure pressure");
     tmr.start(timerID, 250, function()
         local press = Pressure:levelNow()
@@ -32,7 +37,6 @@ function Pressure:measureLevel(callback)
             diff = last - press
             last = press
             if (diff < 6) then
-                cb(last)
                 tmr.stop(timerID)
             end
         else
@@ -43,7 +47,6 @@ function Pressure:measureLevel(callback)
                 pumpStageFinished = true
                 last = 10000
             end
-
         end
     end)
 end
